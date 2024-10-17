@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Список підприємств</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Список підприємств</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Назва підприємства</th>
+                <th>Кількість співробітників</th>
+                <th>Галузь</th>
+                <th>Адреса</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($enterprises as $enterprise): ?>
+                <tr>
+                    <td>
+                        <?= $enterprise['code']; ?>
+                    </td>
+                    <td>
+                        <?= $enterprise['name']; ?>
+                    </td>
+                    <td>
+                        <?= $enterprise['employees']; ?>
+                    </td>
+                    <td>
+                        <?= $enterprise['industry']; ?>
+                    </td>
+                    <td>
+                        <?= $enterprise['address']; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</body>
+
+<body>
+    <div class="filters">
+        <div>
+            <h2>Фільтрація Підприємств</h2>
+            <form action="" method="get">
+                <label for="industry">Галузь:</label><br>
+                <input type="text" id="industry" name="industry" required><br><br>
+
+                <label for="minEmployees">Мінімальна кількість співробітників:</label><br>
+                <input type="number" id="minEmployees" name="minEmployees" min="0" required><br><br>
+
+                <label for="maxEmployees">Максимальна кількість співробітників:</label><br>
+                <input type="number" id="maxEmployees" name="maxEmployees" min="0" required><br><br>
+
+                <button type="submit">Фільтрувати</button>
+            </form>
+        </div>
+
+        <div>
+            <h2>Додати нове підприємство</h2>
+            <form method="post" action="">
+                <label for="code">Код підприємства:</label><br>
+                <input type="text" id="code" name="code" required><br><br>
+
+                <label for="name">Назва підприємства:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="employees">Кількість співробітників:</label><br>
+                <input type="number" id="employees" name="employees" min="0" required><br><br>
+
+                <label for="industry">Галузь:</label><br>
+                <input type="text" id="industry" name="industry" required><br><br>
+
+                <label for="address">Адреса:</label><br>
+                <input type="text" id="address" name="address" required><br><br>
+
+                <input type="submit" value="Додати підприємство">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

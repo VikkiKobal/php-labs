@@ -17,6 +17,7 @@
                 <th>Кількість співробітників</th>
                 <th>Галузь</th>
                 <th>Адреса</th>
+                <th>Дії</th>
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,11 @@
                     </td>
                     <td>
                         <?= $enterprise['address']; ?>
+                    </td>
+                    <td>
+                        <a href="?edit=<?= $enterprise['code']; ?>">
+                            <button>Редагувати</button>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -62,24 +68,34 @@
         </div>
 
         <div>
-            <h2>Додати нове підприємство</h2>
+            <h2>
+                <?php if ($isEditing): ?>
+                    Редагувати підприємство
+                <?php else: ?>
+                    Додати нове підприємство
+                <?php endif; ?>
+            </h2>
             <form method="post" action="">
                 <label for="code">Код підприємства:</label><br>
-                <input type="text" id="code" name="code" required><br><br>
+                <input type="text" id="code" name="code" value="<?= $editingEnterprise['code'] ?? ''; ?>" <?= $isEditing ? 'readonly' : ''; ?> required><br><br>
 
                 <label for="name">Назва підприємства:</label><br>
-                <input type="text" id="name" name="name" required><br><br>
+                <input type="text" id="name" name="name" value="<?= $editingEnterprise['name'] ?? ''; ?>"
+                    required><br><br>
 
                 <label for="employees">Кількість співробітників:</label><br>
-                <input type="number" id="employees" name="employees" min="0" required><br><br>
+                <input type="number" id="employees" name="employees" min="0"
+                    value="<?= $editingEnterprise['employees'] ?? ''; ?>" required><br><br>
 
                 <label for="industry">Галузь:</label><br>
-                <input type="text" id="industry" name="industry" required><br><br>
+                <input type="text" id="industry" name="industry" value="<?= $editingEnterprise['industry'] ?? ''; ?>"
+                    required><br><br>
 
                 <label for="address">Адреса:</label><br>
-                <input type="text" id="address" name="address" required><br><br>
+                <input type="text" id="address" name="address" value="<?= $editingEnterprise['address'] ?? ''; ?>"
+                    required><br><br>
 
-                <input type="submit" value="Додати підприємство">
+                <input type="submit" value="<?= $isEditing ? 'Оновити підприємство' : 'Додати підприємство'; ?>">
             </form>
         </div>
     </div>

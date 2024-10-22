@@ -1,33 +1,39 @@
 <?php
-if (
-    array_key_exists('industry', $_GET) && !empty($_GET['industry']) &&
-    array_key_exists('minEmployees', $_GET) && !empty($_GET['minEmployees']) &&
-    array_key_exists('maxEmployees', $_GET) && !empty($_GET['maxEmployees'])
-) {
-    $industry = $_GET['industry'];
-    $minEmployees = (int) $_GET['minEmployees'];
-    $maxEmployees = (int) $_GET['maxEmployees'];
 
-    $enterprises = filterEnterprices($enterprises, $industry, $minEmployees, $maxEmployees);
-}
+include_once 'updateEnterprise.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (
-        array_key_exists('code', $_POST) &&
-        array_key_exists('name', $_POST) &&
-        array_key_exists('employees', $_POST) &&
-        array_key_exists('industry', $_POST) &&
-        array_key_exists('address', $_POST)
-    ) {
+$isEditing = false;
+$editingEnterprise = [];
 
-        $enterprises[] = [
-            'code' => $_POST['code'],
-            'name' => $_POST['name'],
-            'employees' => (int) $_POST['employees'],
-            'industry' => $_POST['industry'],
-            'address' => $_POST['address'],
-        ];
+if (isset($_GET['edit'])) {
+    $code = $_GET['edit'];
+
+    foreach ($enterprises as $enterprise) {
+        if ($enterprise['code'] === $code) {
+            $isEditing = true;
+            $editingEnterprise = $enterprise;
+            break;
+        }
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $code = $_POST['code'];
+    $name = $_POST['name'];
+    $employees = (int) $_POST['employees'];
+    $industry = $_POST['industry'];
+    $address = $_POST['address'];
 
+    if ($isEditing) {
+        updateEnterprise($enterprises, $code, $name, $employees, $industry, $address);
+    } else {
+        $enterprises[] = [
+            'code' => $code,
+            'name' => $name,
+            'employees' => $employees,
+            'industry' => $industry,
+            'address' => $address,
+        ];
+    }
+}
+?>
